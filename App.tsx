@@ -6,27 +6,29 @@ import {
   Roboto_300Light,
   Roboto_400Regular,
   Roboto_500Medium,
+  Roboto_700Bold,
 } from "@expo-google-fonts/roboto";
 import { THEME } from "./src/global";
-import { Text } from "react-native";
 import { FullScreenLoader } from "./src/components";
+import { Welcome } from "./src/screens";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
     Roboto_300Light,
     Roboto_400Regular,
     Roboto_500Medium,
+    Roboto_700Bold,
   });
 
   return (
     <NativeBaseProvider theme={THEME.default}>
-      {!fontsLoaded ? (
-        <FullScreenLoader />
-      ) : (
+      {fontsLoaded ? (
         <SafeAreaView>
-          <StatusBar />
-          <Text>App</Text>
+          <StatusBar backgroundColor="#171717" />
+          <Welcome />
         </SafeAreaView>
+      ) : (
+        <FullScreenLoader />
       )}
     </NativeBaseProvider>
   );

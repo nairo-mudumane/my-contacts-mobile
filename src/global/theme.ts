@@ -4,28 +4,17 @@ export const THEME = {
   default: extendTheme({
     fontConfig: {
       Roboto: {
-        100: {
-          normal: "Roboto-Light",
-          italic: "Roboto-LightItalic",
-        },
-        200: {
-          normal: "Roboto-Light",
-          italic: "Roboto-LightItalic",
-        },
         300: {
-          normal: "Roboto-Light",
-          italic: "Roboto-LightItalic",
+          normal: "Roboto_300Light",
         },
         400: {
-          normal: "Roboto-Regular",
-          italic: "Roboto-Italic",
+          normal: "Roboto_400Regular",
         },
         500: {
-          normal: "Roboto-Medium",
+          normal: "Roboto_500Medium",
         },
-        600: {
-          normal: "Roboto-Medium",
-          italic: "Roboto-MediumItalic",
+        700: {
+          normal: "Roboto_700Bold",
         },
       },
     },
