@@ -1,5 +1,6 @@
 import React from "react";
-import { Box, Heading } from "native-base";
+import { Box, Icon, Heading, Text } from "native-base";
+import { Fontisto } from "@expo/vector-icons";
 import { Button, PageContainer } from "../../components";
 
 export function Welcome() {
@@ -12,9 +13,20 @@ export function Welcome() {
           </Heading>
         </Box>
 
-        <Box className="mt-10">
-          <Button size="lg" text="Entrar com Google" />
+        <Box className="my-6">
+          <Button
+            leftIcon={
+              <Icon as={Fontisto} name="google" size="md" color="white" />
+            }
+            size="lg"
+            text="Get started with Google"
+          />
         </Box>
+
+        <Text color="white">
+          We do not use any information other than your{"\n"} email to create
+          your account.
+        </Text>
       </Box>
     </PageContainer>
   );
