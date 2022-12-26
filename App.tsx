@@ -11,6 +11,7 @@ import {
 import { THEME } from "./src/global";
 import { FullScreenLoader } from "./src/components";
 import { Welcome } from "./src/screens";
+import { AuthContextProvider } from "./src/contexts";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -24,8 +25,9 @@ export default function App() {
     <NativeBaseProvider theme={THEME.default}>
       {fontsLoaded ? (
         <SafeAreaView>
-          <StatusBar backgroundColor="#171717" />
-          <Welcome />
+          <AuthContextProvider>
+            <Welcome />
+          </AuthContextProvider>
         </SafeAreaView>
       ) : (
         <FullScreenLoader />
