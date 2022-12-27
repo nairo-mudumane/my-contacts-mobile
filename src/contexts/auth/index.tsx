@@ -31,24 +31,18 @@ export function AuthContextProvider(props: IChildren) {
       setLoading(true);
       await promptAsync();
     } catch (error) {
-      console.error(error);
+    } finally {
+      setLoading(false);
     }
-    // finally {
-    //   setLoading(false);
-    // }
   }
 
   async function loginWithGoogle(token: string) {
-    console.log("google login");
-
     try {
       setLoading(true);
       await signInWithGoogle(token).then((userData) => {
-        console.log("userData: ", userData);
         setUser(userData);
       });
     } catch (error) {
-      console.log("error  here");
       setError(error.message);
     } finally {
       setLoading(false);
@@ -57,10 +51,7 @@ export function AuthContextProvider(props: IChildren) {
 
   React.useEffect(() => {
     if (response && response.type === "success") {
-      (async () => {
-        console.log("accessToken: ", response.authentication.accessToken);
-        await loginWithGoogle(response.authentication.accessToken);
-      })();
+      loginWithGoogle(response.authentication.accessToken);
     }
   }, [response]);
 

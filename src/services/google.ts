@@ -12,6 +12,8 @@ export async function signInWithGoogle(token: string): Promise<IUser> {
 
     return user;
   } catch (error: AxiosError | any) {
+    console.log("error: ", JSON.stringify(error));
+
     const message =
       (error.response && error.response.data && error.response.data.message) ||
       error.message;
