@@ -1,13 +1,21 @@
 import { createStackNavigator } from "@react-navigation/stack";
+import { useAuth } from "../hooks";
 import { Home, Login } from "../screens";
 
 const Stack = createStackNavigator();
 
 export function AppRoutes() {
+  const { user } = useAuth();
+
   return (
-    <Stack.Navigator initialRouteName="Login">
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Home" component={Home} />
+    <Stack.Navigator
+      initialRouteName={!user.token ? "login" : "home"}
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="login" component={Login} />
+      <Stack.Screen name="home" component={Home} />
     </Stack.Navigator>
   );
 }

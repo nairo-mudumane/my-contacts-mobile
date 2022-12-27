@@ -2,9 +2,12 @@ import React from "react";
 import * as authSession from "expo-auth-session";
 import * as Google from "expo-auth-session/providers/google";
 import * as WebBrowser from "expo-web-browser";
+import { useNavigation } from "@react-navigation/native";
 import type { IChildren, IUser } from "../../@types";
 import type { IAuthContext } from "./@types";
 import { signInWithGoogle } from "../../services";
+import { LocalStorage } from "../../resources";
+import { FullScreenLoader } from "../../components";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -13,6 +16,8 @@ export const AuthContext = React.createContext<IAuthContext>(
 );
 
 export function AuthContextProvider(props: IChildren) {
+  const navigation = useNavigation();
+
   const redirectUri = authSession.makeRedirectUri({ useProxy: true });
   const scopes = ["profile", "email"];
   const [request, response, promptAsync] = Google.useAuthRequest({
@@ -39,10 +44,15 @@ export function AuthContextProvider(props: IChildren) {
   async function loginWithGoogle(token: string) {
     try {
       setLoading(true);
-      await signInWithGoogle(token).then((userData) => {
+      await signInWithGoogle(token).then(async (userData) => {
         setUser(userData);
+        await new LocalStorage().storeData(
+          "_u",
+          JSON.stringify({ token: userData.token })
+        );
       });
-    } catch (error) {
+      navigation.navigate("home" as never);
+    } catch (error: any) {
       setError(error.message);
     } finally {
       setLoading(false);
@@ -50,7 +60,11 @@ export function AuthContextProvider(props: IChildren) {
   }
 
   React.useEffect(() => {
-    if (response && response.type === "success") {
+    if (
+      response !== null &&
+      response.type === "success" &&
+      response.authentication?.accessToken
+    ) {
       loginWithGoogle(response.authentication.accessToken);
     }
   }, [response]);

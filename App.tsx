@@ -1,8 +1,6 @@
 import React from "react";
-import "react-native-gesture-handler";
-import { NavigationContainer } from "@react-navigation/native";
 import { NativeBaseProvider } from "native-base";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { NavigationContainer } from "@react-navigation/native";
 import {
   useFonts,
   Roboto_300Light,
@@ -10,11 +8,10 @@ import {
   Roboto_500Medium,
   Roboto_700Bold,
 } from "@expo-google-fonts/roboto";
-import { THEME } from "./src/global";
-import { FullScreenLoader } from "./src/components";
 import { AuthContextProvider } from "./src/contexts";
-import { AppRoutes } from "./src/routes/app.routes";
-import { Login } from "./src/screens";
+import { THEME } from "./src/global";
+import { Routes } from "./src/routes";
+import { FullScreenLoader } from "./src/components";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -27,16 +24,9 @@ export default function App() {
   return (
     <NavigationContainer>
       <NativeBaseProvider theme={THEME.default}>
-        <SafeAreaView>
-          <AuthContextProvider>
-            {fontsLoaded ? (
-              // <Login />
-              <AppRoutes />
-            ) : (
-              <FullScreenLoader />
-            )}
-          </AuthContextProvider>
-        </SafeAreaView>
+        <AuthContextProvider>
+          {fontsLoaded ? <Routes /> : <FullScreenLoader />}
+        </AuthContextProvider>
       </NativeBaseProvider>
     </NavigationContainer>
   );

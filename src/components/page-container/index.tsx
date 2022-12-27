@@ -1,20 +1,26 @@
 import React from "react";
-import { StatusBar } from "native-base";
 import type { IPageContainerProps } from "./@types";
-import { View } from "react-native";
+import { Platform, StatusBar } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export function PageContainer(props: IPageContainerProps) {
   return (
-    <React.Fragment>
+    <>
       <StatusBar
         translucent
         barStyle="light-content"
         backgroundColor="#171717"
       />
 
-      <View className={`w-full px-6 ${props.bg ? props.bg : "bg-[#171717]"}`}>
+      <SafeAreaView
+        className={`px-6 flex-${props.flex !== undefined ? props.flex : 1}`}
+        style={{
+          backgroundColor: props.bg ? props.bg : "#171717",
+          paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+        }}
+      >
         {props.children}
-      </View>
-    </React.Fragment>
+      </SafeAreaView>
+    </>
   );
 }
