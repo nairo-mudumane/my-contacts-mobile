@@ -1,5 +1,7 @@
 import React from "react";
-import { NativeBaseProvider, StatusBar } from "native-base";
+import "react-native-gesture-handler";
+import { NavigationContainer } from "@react-navigation/native";
+import { NativeBaseProvider } from "native-base";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   useFonts,
@@ -10,8 +12,9 @@ import {
 } from "@expo-google-fonts/roboto";
 import { THEME } from "./src/global";
 import { FullScreenLoader } from "./src/components";
-import { Welcome } from "./src/screens";
 import { AuthContextProvider } from "./src/contexts";
+import { AppRoutes } from "./src/routes/app.routes";
+import { Login } from "./src/screens";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -22,16 +25,19 @@ export default function App() {
   });
 
   return (
-    <NativeBaseProvider theme={THEME.default}>
-      {fontsLoaded ? (
+    <NavigationContainer>
+      <NativeBaseProvider theme={THEME.default}>
         <SafeAreaView>
           <AuthContextProvider>
-            <Welcome />
+            {fontsLoaded ? (
+              // <Login />
+              <AppRoutes />
+            ) : (
+              <FullScreenLoader />
+            )}
           </AuthContextProvider>
         </SafeAreaView>
-      ) : (
-        <FullScreenLoader />
-      )}
-    </NativeBaseProvider>
+      </NativeBaseProvider>
+    </NavigationContainer>
   );
 }

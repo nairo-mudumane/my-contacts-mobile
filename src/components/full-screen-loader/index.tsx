@@ -1,10 +1,13 @@
 import React from "react";
 import { Center, Spinner } from "native-base";
+import { PageContainer } from "../page-container";
 
 export function FullScreenLoader() {
   return (
-    <Center alignItems="center" justifyContent="center" flex={1}>
-      <Spinner size="lg" />
-    </Center>
+    <PageContainer>
+      <Center className="w-full h-full items-center justify-center">
+        <Spinner size="lg" />
+      </Center>
+    </PageContainer>
   );
 }
