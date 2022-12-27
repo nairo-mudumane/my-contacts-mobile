@@ -9,7 +9,7 @@ export function Home() {
 
   return (
     <React.Fragment>
-      <Header back />
+      <Header />
 
       <PageContainer>
         <Favorites />

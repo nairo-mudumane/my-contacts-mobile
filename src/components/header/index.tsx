@@ -1,11 +1,13 @@
 import React from "react";
 import { Fontisto } from "@expo/vector-icons";
-import { Box, Container, Heading, Icon, IconButton, Text } from "native-base";
+import { Avatar, Box, Heading, Icon, IconButton } from "native-base";
 import type { IHeaderProps } from "./@types";
 import { PageContainer } from "../page-container";
-import { Button } from "../button";
+import { useAuth } from "../../hooks";
 
 export function Header(props: IHeaderProps) {
+  const { user } = useAuth();
+
   if (props.back)
     return (
       <PageContainer flex={0}>
@@ -17,18 +19,25 @@ export function Header(props: IHeaderProps) {
             }
           />
 
-          <Heading color="white" fontSize={22}>
-            {props.title ? props.title : "My Contacts"}
-          </Heading>
+          <Box>
+            <Avatar source={{ uri: user.avatar }} size="md" />
+          </Box>
         </Box>
       </PageContainer>
     );
 
   return (
     <PageContainer flex={0}>
-      <Box className="">
-        <Text color="white">{props.title ? props.title : "My Contacts"}</Text>
-        <Button text="" />
+      <Box className="flex-row items-center justify-between">
+        <Box>
+          <Heading color="white" fontSize={20}>
+            {props.title ? props.title : "MyContacts"}
+          </Heading>
+        </Box>
+
+        <Box>
+          <Avatar source={{ uri: user.avatar }} size="md" />
+        </Box>
       </Box>
     </PageContainer>
   );
