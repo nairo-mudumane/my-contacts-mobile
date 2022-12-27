@@ -48,3 +48,25 @@ export async function getContacts(token: string): Promise<IContact[]> {
     throw new Error(message);
   }
 }
+
+export async function getContactById(
+  token: string,
+  id: string
+): Promise<IContact | undefined> {
+  try {
+    const contact = await api
+      .get<IData<IContact>>(`/contacts/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(({ data }) => data.data);
+
+    return contact;
+  } catch (error: AxiosError | any) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message;
+    throw new Error(message);
+  }
+}
