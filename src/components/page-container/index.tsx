@@ -13,7 +13,9 @@ export function PageContainer(props: IPageContainerProps) {
       />
 
       <SafeAreaView
-        className={`px-6 flex-${props.flex !== undefined ? props.flex : 1}`}
+        className={`py-${props.py !== undefined ? props.py : 1} px-${
+          props.px !== undefined ? props.px : 6
+        } flex-${props.flex !== undefined ? props.flex : 1}`}
         style={{
           backgroundColor: props.bg ? props.bg : "#171717",
           paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,

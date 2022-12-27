@@ -25,3 +25,26 @@ export async function getFavorites(token: string): Promise<IContact[]> {
     throw new Error(message);
   }
 }
+
+export async function getContacts(token: string): Promise<IContact[]> {
+  try {
+    const contacts: IContact[] = [];
+
+    await api
+      .get<IData<IContact[]>>("/contacts", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(({ data }) => {
+        data.data?.forEach((item) => contacts.push(item));
+      });
+
+    return contacts;
+  } catch (error: AxiosError | any) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message;
+    throw new Error(message);
+  }
+}
