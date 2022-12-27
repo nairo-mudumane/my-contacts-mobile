@@ -58,6 +58,7 @@ export function AuthContextProvider(props: IChildren) {
   React.useEffect(() => {
     if (response && response.type === "success") {
       (async () => {
+        console.log("accessToken: ", response.authentication.accessToken);
         await loginWithGoogle(response.authentication.accessToken);
       })();
     }
